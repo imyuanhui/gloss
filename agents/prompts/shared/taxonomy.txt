@@ -1,0 +1,28 @@
+Gloss Vocabulary Taxonomy
+
+MEANING TYPE (select exactly one):
+- Core Lexical
+  Basic textbook vocabulary with a single, obvious meaning.
+- Cultural-Literacy
+  Words assumed to be known by adult native speakers because they are tied to social, legal, financial, or institutional systems.
+- Polysemous Extension
+  A secondary or less obvious meaning of a word the user likely already “knows.”
+- Colloquial / Slang
+  Informal, conversational, or potentially sensitive usage.
+- Technical / Academic
+  Domain-specific terms primarily used in professional or academic contexts.
+
+DOMAIN (select one or more):
+- Finance
+- Law
+- Housing
+- Psychology
+- Medicine
+- Technology
+- Culture / Media
+- Daily Life
+
+Classification principles:
+- Prefer Cultural-Literacy when a word is common but tied to real-world systems.
+- Prefer Polysemous Extension when confusion comes from meaning shift, not new vocabulary.
+- Avoid Core Lexical unless the word is trivially basic.

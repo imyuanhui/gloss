@@ -1,0 +1,22 @@
+Output Contract (Strict)
+
+You MUST return a JSON object with exactly these fields:
+
+{
+  "core_meaning": string,
+  "meaning_type": string,
+  "domain": string[]
+}
+
+Field constraints:
+- core_meaning:
+  - one sentence
+  - no trailing punctuation beyond a single period
+- meaning_type:
+  - must exactly match one taxonomy value
+- domain:
+  - must be a non-empty array
+  - values must exactly match taxonomy values
+
+Do not include any additional fields.
+Do not include explanations, notes, or commentary outside the JSON object.

@@ -1,0 +1,94 @@
+Output Contract (Strict – MVP)
+
+You MUST perform exactly these steps, in this order:
+
+1) Construct a JSON payload named `notion_properties` using ONLY the input data.
+2) The payload MUST match the Notion property schema exactly as defined below.
+3) Pass `notion_properties` to the `create_page` tool.
+4) Read the HTTP response status code returned by the tool.
+5) Return a final JSON result indicating success or failure.
+
+────────────────────────
+Notion Properties Schema
+────────────────────────
+
+The `notion_properties` object MUST have exactly these fields:
+
+"Word / Phrase":
+{
+  "title": [
+    { "text": { "content": "<word>" } }
+  ]
+}
+
+"Core Meaning":
+{
+  "rich_text": [
+    { "text": { "content": "<core_meaning>" } }
+  ]
+}
+
+"Meaning Type":
+{
+  "select": { "name": "<meaning_type>" }
+}
+
+"Domain":
+{
+  "multi_select": [
+    { "name": "<domain1>" },
+    { "name": "<domain2>" }
+  ]
+}
+
+"Usage Notes":
+{
+  "rich_text": [
+    { "text": { "content": "<usage_notes>" } }
+  ]
+}
+
+"Example":
+{
+  "rich_text": [
+    { "text": { "content": "<example>" } }
+  ]
+}
+
+"Related Words":
+{
+  "rich_text": [
+    { "text": { "content": "<joined_related_words>" } }
+  ]
+}
+
+Rules:
+- Property names MUST match exactly.
+- All string values MUST be trimmed.
+- `related_words` MUST be joined with ", " (comma + space).
+- If `related_words` is empty, set "Related Words" to an empty rich_text array.
+- If `domain` is empty, set it to ["Daily Life"].
+
+────────────────────────
+Final Output Format
+────────────────────────
+
+After calling `create_page`, you MUST return ONLY one of the following JSON objects:
+
+Success:
+{
+  "status": "saved"
+}
+
+Failure:
+{
+  "status": "failed",
+  "error": "<short reason if available>"
+}
+
+Rules:
+- A response code of 200 means "saved".
+- Any other response code means "failed".
+- Do NOT include the Notion page ID.
+- Do NOT return the payload again.
+- Do NOT include explanations, logs, or commentary.

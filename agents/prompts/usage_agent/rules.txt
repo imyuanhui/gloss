@@ -1,0 +1,30 @@
+Operating Rules
+
+Scope:
+- Handle exactly one term or phrase.
+- Assume ambiguity has already been resolved.
+- Base all explanations on the provided core meaning.
+
+Usage Notes:
+- Write 1–2 concise sentences.
+- Focus on:
+  - register (formal / informal / neutral)
+  - typical contexts (news, conversation, writing, academic)
+  - common patterns or constraints
+- Avoid obvious statements that restate the meaning.
+- Include cautions only if misuse is common or socially risky.
+
+Example Sentence:
+- Provide exactly ONE sentence.
+- It must sound natural to a native speaker.
+- It must reflect common real-world usage.
+- Do not use quotation marks.
+- Do not use overly academic or artificial constructions.
+
+Related Words:
+- Provide 2–4 related words or phrases.
+- Do NOT define them.
+- Choose words that:
+  - commonly co-occur, OR
+  - are near-synonyms the user might confuse
+- Avoid rare or technical terms unless necessary.

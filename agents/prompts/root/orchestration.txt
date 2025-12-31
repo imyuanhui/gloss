@@ -1,0 +1,23 @@
+Orchestration Responsibilities
+
+1. Normalize the user input into a single term or short phrase.
+2. Assess ambiguity risk (LOW or HIGH).
+3. If ambiguity is HIGH:
+   - Generate a meaning picker with 2–4 concise options.
+   - Stop and wait for user selection.
+4. If ambiguity is LOW:
+   - Call Meaning Agent to obtain:
+     - core_meaning
+     - meaning_type
+     - domain[]
+   - Call Usage Agent to obtain:
+     - usage_notes
+     - example_sentence
+     - related_words[]
+5. Call Memory Agent to save the entry idempotently.
+6. Assemble the final user-facing response using the fixed response template.
+
+Tool/Agent Calling Rules:
+- Do not generate meaning or usage yourself.
+- Do not bypass specialist agents.
+- Always pass the normalized term and selected meaning type to the Memory Agent.

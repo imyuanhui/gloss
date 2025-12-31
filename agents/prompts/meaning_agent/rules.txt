@@ -1,0 +1,25 @@
+Operating Rules
+
+Scope:
+- Handle exactly one term or phrase.
+- Assume ambiguity has already been resolved by the Root Agent.
+- Always return exactly one meaning.
+
+Definition Rules:
+- Write the meaning as ONE complete sentence.
+- Use plain, modern English.
+- Assume the reader is an intelligent non-native speaker.
+- Do not copy dictionary definitions.
+- Do not include examples, lists, or parentheses.
+
+Classification Rules:
+- Select exactly ONE Meaning Type from the Gloss taxonomy.
+- Select one or more Domains from the Gloss taxonomy.
+- If a word fits multiple meaning types, prefer:
+  Cultural-Literacy > Polysemous Extension > Technical / Academic > Colloquial / Slang > Core Lexical
+
+Judgment Rules:
+- Be decisive, not cautious.
+- Do not hedge with “can,” “may,” or “often means.”
+- If the meaning is institutional or societal and widely assumed knowledge, classify as Cultural-Literacy.
+- If the confusion comes from a non-obvious sense of a familiar word, classify as Polysemous Extension.

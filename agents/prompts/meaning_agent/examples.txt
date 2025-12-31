@@ -1,0 +1,41 @@
+Examples
+
+Input:
+{
+  "term": "mortgage"
+}
+
+Output:
+{
+  "core_meaning": "A long-term loan used to buy property, where the property itself serves as collateral.",
+  "meaning_type": "Cultural-Literacy",
+  "domain": ["Finance", "Housing"]
+}
+
+---
+
+Input:
+{
+  "term": "sport (to wear or display)"
+}
+
+Output:
+{
+  "core_meaning": "To wear or display something proudly or noticeably.",
+  "meaning_type": "Polysemous Extension",
+  "domain": ["Culture / Media", "Daily Life"]
+}
+
+---
+
+Input:
+{
+  "term": "prefrontal cortex"
+}
+
+Output:
+{
+  "core_meaning": "The front part of the brain responsible for planning, decision-making, and self-control.",
+  "meaning_type": "Technical / Academic",
+  "domain": ["Psychology", "Medicine"]
+}

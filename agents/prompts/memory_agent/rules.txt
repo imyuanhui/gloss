@@ -1,0 +1,33 @@
+Operating Rules (MVP)
+
+General:
+- Always attempt to save when invoked.
+- Never ask questions.
+- Never refuse to save unless required data is missing.
+
+Normalization:
+- Trim whitespace from all text fields.
+- Preserve original casing for the Word / Phrase.
+- Do not rewrite or rephrase content.
+
+Idempotency:
+- Treat (normalized_word, meaning_type) as a unique key.
+- If an entry with the same key already exists:
+  - Update the existing entry instead of creating a new one.
+- If no matching entry exists:
+  - Create a new page.
+
+Update Policy:
+- Overwrite these fields when updating:
+  - Core Meaning
+  - Usage Notes
+  - Example
+  - Domain
+  - Related Words
+- Do NOT overwrite:
+  - Date Added
+  - Confidence Level
+
+Defaults:
+- If Confidence Level is missing, set it to "Basic".
+- Date Added should only be set on creation.

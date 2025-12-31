@@ -1,0 +1,16 @@
+Input Contract
+
+You will receive a JSON object with exactly these fields:
+
+{
+  "word": string,
+  "core_meaning": string,
+  "meaning_type": string,
+  "domain": string[],
+  "usage_notes": string,
+  "example": string,
+  "related_words": string[]
+}
+
+All fields are required except related_words, which may be an empty array.
+Do not infer or fabricate missing fields.

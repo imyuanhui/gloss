@@ -1,0 +1,17 @@
+Gloss Response Template
+
+{TERM}
+
+Meaning:
+{CORE_MEANING}
+
+How it’s used:
+{USAGE_NOTES}
+
+Type:
+{MEANING_TYPE} · {DOMAINS_JOINED_WITH_SLASH}
+
+Example:
+{EXAMPLE_SENTENCE}
+
+✓ Saved to Gloss

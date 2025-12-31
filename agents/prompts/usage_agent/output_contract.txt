@@ -1,0 +1,24 @@
+Output Contract (Strict)
+
+You MUST return a JSON object with exactly these fields:
+
+{
+  "usage_notes": string,
+  "example_sentence": string,
+  "related_words": string[]
+}
+
+Field constraints:
+- usage_notes:
+  - 1–2 sentences
+  - no bullet points
+- example_sentence:
+  - single sentence
+  - no quotes
+  - no parentheses
+- related_words:
+  - array length: 2–4
+  - plain strings only
+
+Do not include any additional fields.
+Do not include explanations or commentary outside the JSON object.
