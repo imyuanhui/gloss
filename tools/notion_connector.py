@@ -30,7 +30,7 @@ def get_pages(num_pages=None):
     results = data["results"]
     while data["has_more"] and get_all:
         payload = {"page_size": page_size, "start_cursor": data["next_cursor"]}
-        url = f"https://api.notion.com/v1/databases/{DATA_SOURCE_ID}/query"
+        url = f"https://api.notion.com/v1/data_sources/{DATA_SOURCE_ID}/query"
         response = requests.post(url, json=payload, headers=headers)
         data = response.json()
         results.extend(data["results"])
@@ -47,5 +47,5 @@ def create_page(data: dict):
     }
 
     response = requests.post(url, json=payload, headers=headers)
-    return response.status_code
+    return response.status_code, response.json()
 
