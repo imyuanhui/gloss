@@ -1,0 +1,5 @@
+fastapi
+unicorn
+pydantic
+python-dotenv
+httpx
