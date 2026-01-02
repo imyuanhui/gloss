@@ -1,6 +1,6 @@
 from typing import Optional, Dict, Any
 import httpx
-
+import requests
 from app.config import settings
 from app.schemas.generator import NotionPagePayload
 
@@ -30,11 +30,11 @@ class NotionClient:
         properties = {
             "Word / Phrase": {"title": [{"text": {"content": payload.word}}]},
             "Core Meaning": {"rich_text": [{"text": {"content": payload.core_meaning}}]},
-            "Meaning Type": {"rich_text": [{"text": {"content": payload.meaning_type}}]},
-            "Domain": {"multi_select": [{"name": d} for d in payload.domain]},
+            "Meaning Type": {"select": {"name": payload.meaning_type}},
+            "Domain": {"multi_select": [{"name": d} for d in (payload.domain or [])]},
             "Usage Notes": {"rich_text": [{"text": {"content": payload.usage_notes or ""}}]},
-            "Example": {"rich_text": [{"text": {"content": payload.example}}]},
-            "Related Words": {"multi_select": [{"name": w} for w in payload.related_words]},
+            "Example": {"rich_text": [{"text": {"content": payload.example or ""}}]},
+            "Related Words": {"rich_text": [{"text": {"content": ", ".join(map(str, payload.related_words))}}]} if payload.related_words else {"rich_text": []},
         }
 
         body = {
@@ -42,7 +42,8 @@ class NotionClient:
             "properties": properties,
         }
 
-        with httpx.Client(timeout=30) as client:
-            r = client.post(url, headers=headers, json=body)
-            r.raise_for_status()
-            return r.json()
+        try:
+            response = requests.post(url, json=body, headers=headers, timeout=30)
+            return {"status_code": response.status_code, "response": response.json()}
+        except requests.RequestException as e:
+            return {"status_code": 500, "response": {"error": str(e)}}
