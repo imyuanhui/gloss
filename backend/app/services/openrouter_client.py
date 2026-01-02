@@ -9,8 +9,8 @@ class OpenRouterClient:
     def __init__(self, api_key: Optional[str]):
         self.api_key = api_key
 
-    def chat(self, model: str, messages: List[Dict[str, Any]]) -> str:
-    # def chat(self, model: str, messages: List[Dict[str, Any]], max_tokens: int, temperature: float = 0.2) -> str:
+    # def chat(self, model: str, messages: List[Dict[str, Any]]) -> str:
+    def chat(self, model: str, messages: List[Dict[str, Any]], max_tokens: int, temperature: float = 0.2) -> str:
         if settings.mock_mode:
             # In mock mode, the agents will bypass this anyway, but keep it safe.
             return "{}"

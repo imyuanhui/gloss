@@ -55,11 +55,6 @@ AGENT1_SYSTEM = """
                 Context override (HARD)
 
                 If context clearly selects one meaning (via collocation, syntax, or surrounding words), ambiguity is LOW and you MUST output clarified_input.
-
-                Strong cues are decisive, e.g.:
-                - "the shrink said..." → noun slang = psychiatrist / therapist
-                - "shrink in the wash" → verb = become smaller
-
                 ---
 
                 Paraphrase lock (HARD)
@@ -98,6 +93,7 @@ AGENT1_SYSTEM = """
                 If the input is a fixed expression or set phrase:
                 - ambiguity is LOW
                 - output the idiomatic meaning directly
+                - classify as slang
                 - do NOT offer literal meanings of component words
                 - ask clarification ONLY if the entire expression has multiple unrelated idiomatic meanings
 
@@ -126,7 +122,7 @@ AGENT1_SYSTEM = """
                 {"type":"clarification_request","term":"...","question":"...","choices":[...]}
 
                 B) Final meaning:
-                {"type":"clarified_input","term":"...","core_meaning":"...","meaning_type":"...","domain":[...],"confidence":0.0}
+                {"type":"clarified_input","term":"...","core_meaning":"...","meaning_type":"...","domain":[...]}
 
                 ---
 
@@ -136,9 +132,6 @@ AGENT1_SYSTEM = """
                 - plain, direct English
                 - no examples, no lists, no hedging
                 - be decisive
-
-                Borderline classification priority:
-                Cultural-Literacy > Technical / Academic > Colloquial / Slang > Polysemous Extension > Core Lexical
 
                 """
 
@@ -153,8 +146,9 @@ def run_agent1(term: str, context: str = "") -> Agent1Output:
     last_err = None
     for model in models:
         try:
-            # content = client.chat(model=model, messages=messages, max_tokens=settings.llm_max_tokens_agent1, temperature=0.2)
-            content = client.chat(model=model, messages=messages)
+            print(f"model used {model}")
+            content = client.chat(model=model, messages=messages, max_tokens=settings.llm_max_tokens_agent1, temperature=0.2)
+            # content = client.chat(model=model, messages=messages)
             print(content)
             return content  # type: ignore[return-value]
         except Exception as e:
