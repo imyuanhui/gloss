@@ -27,29 +27,22 @@ def _parse_agent2(output: Any) -> NotionPagePayload:
     obj = extract_json(str(output))
     return NotionPagePayload.model_validate(obj)
 
-def run_clarify(term: str, context: str = "", prior: Optional[Dict[str, Any]] = None) -> Agent1Output:
-    out = run_agent1(term=term, context=context, prior=prior)
+def run_clarify(term: str, context: str = "") -> Agent1Output:
+    out = run_agent1(term=term, context=context)
     parsed = _parse_agent1(out)
-
-    # Optional guardrail: force clarification if confidence below threshold
-    if isinstance(parsed, ClarifiedInput) and parsed.confidence < settings.confidence_threshold:
-        return ClarificationRequest(
-            term=term,
-            question=f"I’m not fully confident which sense of '{term}' you mean. Provide a short hint (e.g., business/music/sports).",
-            choices=["business", "music", "sports", "finance", "other"],
-        )
     return parsed
 
-def run_generate_and_optionally_create(
+def run_generate_and_create(
     clarified: ClarifiedInput,
     create_page: bool = True
-) -> Tuple[NotionPagePayload, Optional[Dict[str, Any]]]:
+) -> Dict:
     out = run_agent2(clarified)
     payload = _parse_agent2(out)
+    print("payload", payload)
 
     notion_result = None
     if create_page:
-        notion = NotionClient(settings.notion_token, settings.notion_database_id)
+        notion = NotionClient(settings.notion_token, settings.notion_data_source_id)
         notion_result = notion.create_page(payload)
 
-    return payload, notion_result
+    return notion_result
