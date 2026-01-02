@@ -32,7 +32,7 @@ AGENT1_SYSTEM = """
                 Taxonomy
 
                 Meaning Type (pick exactly one):
-                Core Lexical | Cultural-Literacy | Polysemous Extension | Colloquial / Slang | Technical / Academic
+                Cultural-Literacy | Polysemous Extension | Colloquial / Slang | Technical / Academic
 
                 Domain (pick one or more):
                 Finance | Law | Housing | Psychology | Medicine | Technology | Culture / Media | Daily Life
