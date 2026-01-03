@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vocabooster</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="header">
+        <h1>Vocabooster</h1>
+        <p class="subtitle">Look up a word/phrase. Add context if it helps.</p>
+      </header>
+
+      <section id="messages" class="messages" aria-live="polite"></section>
+
+      <section class="composer">
+        <div class="fields">
+          <input
+            id="termInput"
+            class="input"
+            placeholder="Word or phrase (e.g., shrink, what's the crack)"
+          />
+          <textarea
+            id="contextInput"
+            class="textarea"
+            rows="2"
+            placeholder="Optional context (e.g., 'the shrink told me I'm crazy')"
+          ></textarea>
+        </div>
+        <div class="actions">
+          <button id="sendBtn" class="btn primary">Send</button>
+          <button id="resetBtn" class="btn">Reset</button>
+        </div>
+        <p class="hint">
+          Tip: If the bot asks a clarification question, click one option to
+          continue.
+        </p>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
