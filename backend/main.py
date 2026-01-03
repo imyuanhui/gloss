@@ -4,10 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api import router
 from app.config import settings
 
-import os
-print("SERVER PID:", os.getpid())
-print("CORS ALLOWED ORIGINS:", settings.cors_origins)
-
 app = FastAPI(title="Vocabooster Backend", version="0.1.0")
 
 # CORS
