@@ -1,0 +1,7 @@
+[project]
+dependencies = [
+  "fastapi",
+  "pydantic",
+  "workers-py",
+  "asgi"
+]

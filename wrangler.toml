@@ -1,0 +1,4 @@
+name = "vocabooster-backend"
+main = "worker.py"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["python_workers"]
