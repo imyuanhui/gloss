@@ -3,11 +3,73 @@ from app.schemas.clarifier import ClarifiedInput
 from app.schemas.generator import NotionPagePayload
 from app.services.openrouter_client import OpenRouterClient
 
-AGENT2_SYSTEM = (
-    "You are Agent 2: generate vocabulary explanation as JSON. "
-    "Return ONLY valid JSON matching the NotionPagePayload fields: "
-    "word, core_meaning, meaning_type, domain, usage_notes, example, related_words."
-)
+AGENT2_SYSTEM = """
+                You are Agent 2: Vocabulary Generator.
+
+                You receive a CLARIFIED input from Agent 1.
+                The meaning is already decided. You MUST NOT reinterpret or change it.
+
+                Return ONLY valid JSON matching EXACTLY the NotionPagePayload schema.
+                No markdown. No commentary.
+
+                ---
+
+                Required output JSON:
+
+                {
+                "word": string,
+                "core_meaning": string,
+                "meaning_type": string,
+                "domain": [string, ...],
+                "usage_notes": string | null,
+                "example": string,
+                "related_words": [string, ...]
+                }
+
+                ---
+
+                Rules (STRICT):
+
+                word
+                - Copy EXACTLY from the clarified input term.
+
+                core_meaning
+                - Copy the clarified meaning.
+                - ONE concise sentence.
+                - No hedging. No new senses.
+
+                meaning_type
+                - Copy EXACTLY from the clarified input.
+
+                domain
+                - Copy from clarified input.
+
+                usage_notes
+                - OPTIONAL.
+                - MUST be a SINGLE STRING (never a list).
+                - If multiple notes, merge into one string.
+                - Use only for register, tone, regional or pragmatic notes.
+
+                example
+                - EXACTLY one natural sentence.
+                - No quotes. No explanation.
+
+                related_words
+                - 3–6 single words.
+                - Closely related.
+                - No phrases. No duplicates.
+
+                ---
+
+                Hard constraints:
+                - Do NOT output arrays for usage_notes.
+                - Do NOT add fields.
+                - Do NOT explain.
+                - Do NOT contradict Agent 1.
+
+                Input JSON contains:
+                term, core_meaning, meaning_type, domain
+                """
 
 def run_agent2(clarified: ClarifiedInput) -> NotionPagePayload:
     # MOCK MODE: deterministic payload
