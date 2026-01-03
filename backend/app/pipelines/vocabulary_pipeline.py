@@ -35,11 +35,10 @@ def run_clarify(term: str, context: str = "") -> Agent1Output:
 def run_generate_and_create(
     clarified: ClarifiedInput,
     create_page: bool = True
-) -> Dict:
+) -> Optional[Dict[str, Any]]:
+    
     out = run_agent2(clarified)
     payload = _parse_agent2(out)
-    print("payload", payload)
-
     notion_result = None
     if create_page:
         notion = NotionClient(settings.notion_token, settings.notion_data_source_id)
