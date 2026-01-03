@@ -44,6 +44,6 @@ class NotionClient:
 
         try:
             response = requests.post(url, json=body, headers=headers, timeout=30)
-            return {"status_code": response.status_code, "response": response.json()}
+            return {"status_code": response.status_code, "response": payload}
         except requests.RequestException as e:
-            return {"status_code": 500, "response": {"error": str(e)}}
+            return {"status_code": 500, "error": str(e)}
