@@ -230,3 +230,7 @@ body {
   color: var(--muted);
   font-size: 12px;
 }
+
+#contextInput {
+  font-family: sans-serif;
+}
