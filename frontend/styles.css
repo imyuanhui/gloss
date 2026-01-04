@@ -107,20 +107,23 @@ body {
 }
 
 .card {
-  margin-top: 10px;
-  padding: 12px;
-  border: 1px solid #d8e5ff;
-  background: #f1f5ff;
-  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0px;
+  padding: 0px;
 }
 
 .card h3 {
-  margin: 0 0 6px;
   font-size: 15px;
 }
 
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .kv {
-  margin-top: 8px;
   font-size: 13px;
   color: #2c3340;
 }
@@ -168,6 +171,47 @@ body {
   padding: 10px 12px;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.spinner {
+  display: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-top-color: rgba(0, 0, 0, 0.35);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* small spinner for choice buttons */
+.choice-spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-top-color: rgba(0, 0, 0, 0.35);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+.choice-btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.choice-btn.selected {
+  background: #eef4ff;
+  border-color: #d8e5ff;
 }
 
 .btn.primary {
