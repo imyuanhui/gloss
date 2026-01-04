@@ -1,7 +1,8 @@
 // =======================
 // Config
 // =======================
-const API_URL = "https://gloss.onrender.com/lookup"; // update when deployed
+// const API_URL = "https://gloss.onrender.com/lookup";
+const API_URL = "http://127.0.0.1:8000/lookup";
 const AUTH_TOKEN = ""; // optional: set to "your_token" if backend requires Bearer auth
 
 // =======================
@@ -18,6 +19,7 @@ const termInput = document.getElementById("termInput");
 const contextInput = document.getElementById("contextInput");
 const sendBtn = document.getElementById("sendBtn");
 const resetBtn = document.getElementById("resetBtn");
+const sendSpinner = document.getElementById("sendSpinner");
 
 // =======================
 // UI helpers
@@ -52,6 +54,18 @@ function setSending(isSending) {
   sendBtn.disabled = isSending;
   termInput.disabled = isSending;
   contextInput.disabled = isSending;
+
+  if (sendSpinner) {
+    sendSpinner.style.display = isSending ? "inline-block" : "none";
+  }
+
+  const textEl = sendBtn.querySelector(".btn-text");
+  if (textEl) textEl.textContent = isSending ? "Sending..." : "Send";
+
+  // disable/enable clarification choice buttons if present
+  document.querySelectorAll(".choice-btn").forEach((b) => {
+    b.disabled = isSending;
+  });
 }
 
 // =======================
@@ -91,6 +105,9 @@ function normalizeFinalPayload(data) {
 }
 
 function renderFinal(payload) {
+  // Clear the chat and only show the final card + saved message
+  messagesEl.innerHTML = "";
+
   const domains = Array.isArray(payload.domain)
     ? payload.domain.join(", ")
     : "";
@@ -100,7 +117,8 @@ function renderFinal(payload) {
 
   addBotHTML(`
     <div class="card">
-      <h3>${escapeHtml(payload.word)}</h3>
+      <h3 class="card-title">${escapeHtml(payload.word)}</h3>
+      <div class="card-content">
       <div>${escapeHtml(payload.core_meaning)}</div>
 
       <div class="kv"><span>Meaning type:</span> ${escapeHtml(
@@ -118,13 +136,11 @@ function renderFinal(payload) {
         payload.example || ""
       )}</div>
       <div class="kv"><span>Related:</span> ${escapeHtml(related)}</div>
-    </div>
+      </div>
+      </div>
   `);
 
-  addMessage(
-    "Saved to your Notion database. You can look up another word whenever you're ready.",
-    "bot"
-  );
+  addMessage("Glossed and saved", "bot");
 }
 
 function renderClarification(req) {
@@ -149,6 +165,22 @@ function renderClarification(req) {
   const lastBubble = messagesEl.lastElementChild.querySelector(".bubble");
   lastBubble.querySelectorAll(".choice-btn").forEach((btn) => {
     btn.addEventListener("click", async () => {
+      // ignore clicks if already disabled
+      if (btn.disabled) return;
+
+      // disable all choice buttons immediately to prevent double-clicks
+      lastBubble.querySelectorAll(".choice-btn").forEach((b) => {
+        b.disabled = true;
+        b.classList.add("disabled");
+      });
+
+      // visually mark the clicked button and add a small spinner
+      btn.classList.add("selected");
+      const spinner = document.createElement("span");
+      spinner.className = "choice-spinner";
+      spinner.setAttribute("aria-hidden", "true");
+      btn.appendChild(spinner);
+
       const selected = Number(btn.getAttribute("data-choice"));
       await submitChoice(selected);
     });
@@ -184,6 +216,8 @@ async function submitLookup() {
     const data = await postLookup({ term, context });
 
     if (data && data.type === "clarification_request") {
+      // stop the sending state so buttons are clickable
+      setSending(false);
       renderClarification(data);
       return;
     }
@@ -195,7 +229,7 @@ async function submitLookup() {
     }
 
     // Fallback: Notion raw response dict
-    addMessage("Saved to your Notion database.", "bot");
+    addMessage("Glossed and saved.", "bot");
   } catch (err) {
     addMessage(`Error: ${err.message}`, "bot");
   } finally {
@@ -209,19 +243,27 @@ async function submitChoice(selected_option) {
   setSending(true);
 
   try {
-    // IMPORTANT:
-    // This assumes your backend supports selected_option for the follow-up call.
-    // If it doesn't yet, add it to your LookupRequest schema.
+    // Send the actual chosen text back to the backend as part of the context
+    // and also include the numeric option for backward compatibility.
+    const idx = Number(selected_option);
+    const selected_text =
+      lastClarification && Array.isArray(lastClarification.choices)
+        ? lastClarification.choices[idx - 1]
+        : String(idx);
+
     const body = {
       term: lastRequest.term,
-      context: lastRequest.context,
-      selected_option,
+      // append the chosen text to the previous context (with a space)
+      context: lastRequest.context
+        ? `${lastRequest.context} ${selected_text}`
+        : selected_text,
     };
 
     const data = await postLookup(body);
 
     if (data && data.type === "clarification_request") {
-      // If backend asks again, render again
+      // If backend asks again, render again — re-enable UI before rendering
+      setSending(false);
       renderClarification(data);
       return;
     }
@@ -232,7 +274,7 @@ async function submitChoice(selected_option) {
       return;
     }
 
-    addMessage("Saved to your Notion database.", "bot");
+    addMessage("Glossed and saved.", "bot");
   } catch (err) {
     addMessage(`Error: ${err.message}`, "bot");
   } finally {
@@ -262,7 +304,7 @@ termInput.addEventListener("keydown", (e) => {
 
 function greet() {
   addMessage(
-    "Hello. Enter a word or phrase to look up. Add context if you have it (optional).",
+    "Hello, this is Gloss.\nI help you understand and use real English vocabulary.\nEnter a word or short phrase to look up. Context is optional.\nEvery lookup will be saved to your Notion vocabulary database.",
     "bot"
   );
 }
