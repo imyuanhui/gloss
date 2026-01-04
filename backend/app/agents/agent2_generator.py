@@ -30,6 +30,12 @@ AGENT2_SYSTEM = """
 
                 Rules (STRICT):
 
+                Output MUST be strict JSON:
+                - double quotes only
+                - null/true/false only
+                - no trailing commas
+                - no extra text before/after JSON
+
                 word
                 - Copy EXACTLY from the clarified input term.
 
