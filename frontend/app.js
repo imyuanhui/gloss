@@ -1,9 +1,9 @@
 // =======================
 // Config
 // =======================
-// const API_URL = "https://gloss.onrender.com/lookup";
-const API_URL = "http://127.0.0.1:8000/lookup";
-const AUTH_TOKEN = ""; // optional: set to "your_token" if backend requires Bearer auth
+const API_URL = "https://gloss.onrender.com/lookup";
+// const API_URL = "http://127.0.0.1:8000/lookup";
+const AUTH_TOKEN = "";
 
 // =======================
 // State
