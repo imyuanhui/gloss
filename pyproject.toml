@@ -1,9 +1,0 @@
-[project]
-name = "vocabooster-backend"
-version = "0.1.0"
-dependencies = [
-  "fastapi",
-  "pydantic",
-  "workers-py",
-  "asgi"
-]
