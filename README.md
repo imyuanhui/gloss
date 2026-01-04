@@ -13,6 +13,20 @@ This repository contains the **MVP implementation** of Gloss, including a **simp
 
 ---
 
+## Live Demo (Current Status)
+
+A live demo is available at **[https://gloss.xuyuanhui.org](https://gloss.xuyuanhui.org)**, and the system can also be run locally.
+
+⚠️ **Important note**
+The Notion integration used by the hosted web app is currently connected to **Yuanhui’s personal Notion database**.
+Please do **not** rely on the hosted demo for shared or production usage.
+
+User-specific Notion databases and credentials will be supported in a future version.
+
+You are encouraged to run Gloss locally and connect it to your own Notion workspace.
+
+---
+
 ## Key Features (MVP)
 
 ### 1. Smart Meaning Resolution
@@ -63,20 +77,6 @@ The MVP uses a **Python-controlled pipeline**:
 3. **Python pipeline** – persists the result to Notion
 
 This design avoids hidden agent behavior and keeps the system **predictable, debuggable, and extensible**.
-
----
-
-## Live Demo (Current Status)
-
-A live demo is available at **[https://gloss.xuyuanhui.org](https://gloss.xuyuanhui.org)**, and the system can also be run locally.
-
-⚠️ **Important note**
-The Notion integration used by the hosted web app is currently connected to **Yuanhui’s personal Notion database**.
-Please do **not** rely on the hosted demo for shared or production usage.
-
-User-specific Notion databases and credentials will be supported in a future version.
-
-You are encouraged to run Gloss locally and connect it to your own Notion workspace.
 
 ---
 
